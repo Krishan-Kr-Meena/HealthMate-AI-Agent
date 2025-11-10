@@ -12,8 +12,7 @@ def read_logs():
 
 def run_reflector(symptoms: str, diagnosis: str, feedback: str) -> str:
     logs = read_logs()
-    # Note: Logs are still JSON, but the *current* data is text.
-    last_few_logs = logs[-5:] if logs else [] 
+    last_few_logs = logs[-5:] if logs else []
 
     prompt = f"""
 You are an AI health reflection agent.
@@ -26,13 +25,16 @@ CURRENT SESSION:
 RECENT HISTORY (last {len(last_few_logs)} sessions, as JSON):
 {json.dumps(last_few_logs, indent=2)}
 
-Your task:
-1. Reflect on how the session went based on the user's feedback.
-2. Suggest one concrete way the system could improve its prompts, response handling, or personalization.
+Your task is to provide a concise, 2-3 point summary based on the feedback.
+Use bullet points.
 
-Format your response clearly:
-**Reflection:** [Your reflection here]
-**Suggestion:** [Your suggestion here]
+Format your response exactly like this:
+**Reflection:**
+* [Your 1-sentence reflection on the user's feedback]
+
+**Suggestions:**
+* [Your 1st concrete suggestion for improvement]
+* [Your 2nd concrete suggestion (if any)]
 """
 
     return generate(prompt)
