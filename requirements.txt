@@ -1,0 +1,4 @@
+ibm-cloud-sdk-core==3.24.2
+ibm_watsonx_ai==1.3.32
+python-dotenv==1.1.1
+streamlit==1.48.0
