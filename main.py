@@ -7,11 +7,18 @@ from agents.reflector_agent import run_reflector
 
 if __name__ == "__main__":
     print("🚀 Welcome to HealthMate AI - Powered by Watsonx\n")
-    user_input = input("🧑‍⚕️ Please describe your symptoms: ")
+    
+    # --- Input Section ---
+    symptom_description = input("🧑‍⚕️ Please describe your symptoms (e.g., 'fever and cough'): ")
+    duration = input("⏳ How long have you had these symptoms (e.g., '3 days'): ")
+    severity = ""
+    while severity not in ["mild", "moderate", "severe"]:
+        severity = input("🌡️ How severe are the symptoms (mild, moderate, severe): ").lower()
+    # -------------------------
 
-    print("🤖 Step 1: Intake Agent processing user input...")
-    symptoms_text = run_symptoms_intake(user_input)
-    print(f"✅ Symptoms Summary:\n{symptoms_text}\n")
+    print("\n🤖 Step 1: Intake Agent processing user input...")
+    symptoms_text = run_symptoms_intake(symptom_description, duration, severity)
+    print(f"✅ Symptoms Summary:\n{symptoms_text}\n") # Changed from JSON
 
     print("🩺 Step 2: Diagnosis Agent analyzing symptoms...")
     diagnosis_text = run_diagnosis(symptoms_text)
@@ -33,8 +40,10 @@ if __name__ == "__main__":
 
     # Log the entire interaction
     log_entry = {
-        "user_input": user_input,
-        "symptoms": symptoms_text,
+        "symptom_description": symptom_description,
+        "duration": duration,
+        "severity": severity,
+        "symptoms": symptoms_text, # Changed from JSON
         "diagnosis": diagnosis_text,
         "plan": plan_text,
         "schedule": schedule_text,
